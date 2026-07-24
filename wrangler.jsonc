@@ -1,0 +1,8 @@
+{
+  "name": "cv",
+  "compatibility_date": "2025-12-25",
+  "assets": {
+    "directory": "./dist"
+  }
+}
+

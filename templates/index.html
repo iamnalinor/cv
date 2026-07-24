@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <noscript>
+      <meta http-equiv="refresh" content="0; url={{ base_path }}/en" />
+    </noscript>
+    <script>
+      (function() {
+        var lang = navigator.language || navigator.userLanguage || "en";
+        lang = lang.toLowerCase();
+        if (lang.startsWith("ru")) {
+          window.location.replace("{{ base_path }}/ru");
+        } else {
+          window.location.replace("{{ base_path }}/en");
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <p>If you are not redirected, <a href="{{ base_path }}/en">click here</a>.</p>
+    </noscript>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+@font-face {
+    font-family: "HSE Sans";
+    src: url("../fonts/HSESans-Regular.otf") format("truetype"),
+}
+
+@font-face {
+    font-family: "HSE Sans SemiBold";
+    src: url("../fonts/HSESans-SemiBold.otf") format("truetype"),
+}
+
+.body {
+    font-size: 14px;
+    max-width: 900px;
+    font-family: 'HSE Sans';
+}
+
+@media (max-width: 799px) {
+    .body {
+        padding-top: 2.5rem;
+    }
+}
+
+.col-mapping-key {
+    min-width: 120px;
+}
+
+h2 a {
+    text-transform: none;
+}
+
+.font-bold {
+    font-family: 'HSE Sans SemiBold';
+}

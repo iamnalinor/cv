@@ -1,0 +1,17 @@
+[project]
+name = "nalinor-cv"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.12"
+dependencies = [
+    "jinja2>=3.1.6",
+    "pylatex>=1.4.2",
+    "minify-html>=0.15.0",
+    "pytinytex>=0.5.1",
+]
+
+[dependency-groups]
+dev = [
+    "flask>=3.1.2",
+    "ruff>=0.14.10",
+]

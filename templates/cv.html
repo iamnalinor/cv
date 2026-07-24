@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:title" content="{{ header.title }}" />
+    <meta property="og:url" content="{{ header.url }}" />
+    <meta property="og:type" content="profile" />
+    <meta property="profile:first_name" content="{{ header.first_name }}" />
+    <meta property="profile:last_name" content="{{ header.last_name }}" />
+    <title>{{ header.title }}</title>
+    <link rel="preload" href="/fonts/HSESans-Regular.otf" as="font" type="font/otf" crossorigin="anonymous">
+    <link rel="preload" href="/fonts/HSESans-SemiBold.otf" as="font" type="font/otf" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/css/github-markdown.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  </head>
+  <body class="container my-3 m-auto markdown-body body" id="body">
+
+  <div class="position-absolute top-0 end-0 p-3 d-flex flex-row gap-2 align-items-center" style="z-index: 1000;">
+    <!-- <button id="theme-toggle" class="btn btn-outline-primary btn-sm">
+      <i class="bi bi-sun-fill" id="theme-icon"></i>
+    </button> -->
+    {% if language == "ru" %}
+      <a href="{{ base_path }}/en" class="btn btn-outline-primary btn-sm">
+        <i class="p-1 bi bi-globe"></i>
+        view in english
+      </a>
+    {% else %}
+      <a href="{{ base_path }}/ru" class="btn btn-outline-primary btn-sm">
+        <i class="p-1 bi bi-globe"></i>
+        открыть на русском
+      </a>
+    {% endif %}
+    <a class="btn btn-outline-primary btn-sm" href="/{{ pdf_filename }}" download>
+      <i class="p-1 bi bi-download"></i>
+      {% if language == "ru" %}скачать{% else %}download{% endif %}
+    </a>
+  </div>
+
+    <div class="container" style="text-align: center;">
+      <p class="text-center fs-1 mb-0 font-bold">{{ header.first_name }} {{ header.last_name }}</p>
+      {% if header.contacts %}
+      <div class="row justify-content-center">
+        {% for type, contact in header.contacts.items() %}
+        <div class="col-auto">
+          {% if type == "github" %}
+            <i class="p-2 i bi-github"></i>
+            <a href="https://github.com/{{ contact }}">{{ contact }}</a>
+          {% elif type == "telegram" %}
+            <i class="p-2 bi bi-telegram"></i>
+            <a href="https://t.me/{{ contact }}">@{{ contact }}</a>
+          {% elif type == "email" %}
+            <i class="p-2 bi bi-envelope-fill"></i>
+            <a href="mailto:{{ contact }}">{{ contact }}</a>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    
+    {% for block in blocks %}
+      {% if not block.skip_header %}
+      <h2 class="my-2 text-uppercase">{{ block.name }}</h2>
+      {% endif %}
+
+      {% if block.type == "text" %}
+      <p class="mt-2">{{ block.content }}</p>
+
+      {% elif block.type == "list" %}
+      <ul class="mb-1">
+
+        {% for item in block.content %}
+          <li>{{ item }}</li>
+        {% endfor %}
+
+      </ul>
+    
+      {% elif block.type == "mapping" %}
+
+        <div class="row">
+          {% for item in block.content %}
+            <div class="row">
+              <div class="col-auto col-mapping-key fw-bold">{{ item.name }}</div>
+              <div class="col">{{ item.value }}</div>
+            </div>
+          {% endfor %}
+        </div>
+
+      {% elif block.type == "education" %}
+
+        {% for item in block.content %}
+          <div class="row d-flex justify-content-between align-items-center">
+            <div class="col col-auto text-start fw-bold fs-6">{{ item.name }}</div>
+            <div class="col col-auto text-end fs-6">{{ item.location }}</div>
+          </div>
+          <div class="row d-flex justify-content-between align-items-center">
+            <div class="col col-auto text-start"><i>{{ item.degree }}</i></div>
+            <div class="col col-auto text-end"><i>{{ item.period }}</i></div>
+          </div>
+        {% endfor %}
+
+      {% elif block.type == "experience" %}
+      
+        {% for item in block.content %}
+          <div class="row d-flex justify-content-between align-items-center">
+            <div class="col col-auto text-start">
+              <span class="fs-6">{{ item.name }}</span>
+              {% if item.stack %}
+                <span class="mx-2">|</span>
+                <i>{{ item.stack }}</i>
+              {% endif %}
+            </div>
+            <div class="col col-auto text-end fs-6">{{ item.period }}</div>
+          </div>
+          {% if item.company and item.location %}
+            <div class="row d-flex justify-content-between align-items-center">
+              <div class="col col-auto text-start"><i>{{ item.company }}</i></div>
+              <div class="col col-auto text-end"><i>{{ item.location }}</i></div>
+            </div>
+          {% endif %}
+          {% if item.points %}
+            <ul class="my-1">
+              {% for point in item.points %}
+                <li>{{ point }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endfor %}
+
+      {% endif %}
+    {% endfor %}
+
+    <div class="mt-4 text-center">
+      {% if language == "ru" %}Последнее обновление:{% else %}Last updated:{% endif %}
+      {{ date }}
+    </div>
+  </body>
+</html>
